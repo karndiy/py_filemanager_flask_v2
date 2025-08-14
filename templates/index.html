@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row g-3 align-items-center mb-3">
+  <div class="col-auto">
+    <form class="d-flex" method="get">
+      <input class="form-control" type="search" placeholder="Search by filename..." name="q" value="{{ q }}">
+      <button class="btn btn-outline-secondary ms-2" type="submit">Search</button>
+      {% if q %}<a class="btn btn-link ms-2" href="{{ url_for('index') }}">Clear</a>{% endif %}
+    </form>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+      <div class="d-flex align-items-center gap-2">
+        <input type="file" name="file" class="form-control" multiple required />
+        <button class="btn btn-primary" type="submit">Upload</button>
+      </div>
+      <small class="text-muted">You can select multiple files. Max per request: {{ (config.MAX_CONTENT_LENGTH // (1024*1024)) if config.MAX_CONTENT_LENGTH else '∞' }} MB</small>
+    </form>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>File name</th>
+        <th>Size</th>
+        <th>Type</th>
+        <th>Uploaded</th>
+        <th class="text-end">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for f in files %}
+      <tr class="file-row">
+        <td>{{ f.id }}</td>
+        <td><span class="truncate" title="{{ f.original_name }}">{{ f.original_name }}</span></td>
+        <td>{{ (f.size_bytes/1024/1024)|round(2) }} MB</td>
+        <td>{{ f.mime_type or '-' }}</td>
+        <td>{{ f.uploaded_at.replace('T',' ') }}</td>
+        <td class="text-end">
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('details', file_id=f.id) }}">Details</a>
+          <a class="btn btn-sm btn-success" href="{{ url_for('download', file_id=f.id) }}">Download</a>
+          <form action="{{ url_for('delete', file_id=f.id) }}" method="post" class="d-inline" onsubmit="return confirm('Delete this file?');">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="6" class="text-center text-muted">No files yet. Upload something!</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

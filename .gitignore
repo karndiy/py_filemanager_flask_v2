@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+
+# Env
+.env
+venv/
+ENV/
+
+# Flask
+instance/
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
