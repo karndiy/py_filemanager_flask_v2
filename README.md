@@ -8,7 +8,7 @@ A minimal, production-ready starter for uploading, listing, downloading, and del
 - Download and delete endpoints
 - Simple search by filename
 - Bootstrap UI
-- fix file onec 5GB
+
 
 ## Quickstart
 
@@ -23,7 +23,7 @@ Visit http://127.0.0.1:5000
 
 ## Configuration
 - `UPLOAD_FOLDER`: `uploads/` by default.
-- `MAX_CONTENT_LENGTH`: 50 MB (adjust in `app.py`).
+- `MAX_CONTENT_LENGTH`: 5 GB (adjust in `app.py`).
 - Set `FLASK_SECRET_KEY` env var for a strong session key in production.
 
 ## DB Reset
