@@ -8,6 +8,7 @@ A minimal, production-ready starter for uploading, listing, downloading, and del
 - Download and delete endpoints
 - Simple search by filename
 - Bootstrap UI
+- fix file onec 5GB
 
 ## Quickstart
 
